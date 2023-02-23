@@ -1,7 +1,7 @@
 import { useContext } from 'react';
 import { useForm } from 'react-hook-form';
 import formSchema from './validations';
-import { UserContext } from '../../../pages/Providers/UserContext';
+import { UserContext } from '../../../Providers/UserContext';
 import { StyledButton } from '../../../styles/button';
 import { StyledForm } from '../../../styles/form';
 import Input from '../Input';
@@ -20,13 +20,17 @@ const LoginForm = () => {
 
   const onSubmitFunction = (data) => {
     // console.log(data)
-    userLogin(data)
-  }
+    userLogin(data);
+  };
 
   return (
     <StyledForm onSubmit={handleSubmit(onSubmitFunction)}>
-      <Input type='text' {...register("email")} error={errors.email?.message}/>
-      <Input type='password' {...register("password")} error={errors.password?.message}/>
+      <Input type='text' {...register('email')} error={errors.email?.message} />
+      <Input
+        type='password'
+        {...register('password')}
+        error={errors.password?.message}
+      />
       <StyledButton $buttonSize='default' $buttonStyle='green'>
         Entrar
       </StyledButton>
