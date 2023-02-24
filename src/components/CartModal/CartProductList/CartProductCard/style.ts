@@ -18,7 +18,6 @@ export const StyledCartProductCard = styled.li`
       height: 80px;
       object-fit: contain;
     }
-
     @media (max-width: 450px) {
       width: 40px;
       height: 40px;
@@ -37,6 +36,13 @@ export const StyledCartProductCard = styled.li`
     padding-right: 20px;
     gap: 20px;
 
+    > div {
+      display: flex;
+      flex-direction:  column;
+      justify-content: space-between;
+      gap: 16px;
+    }
+
     button {
       background: transparent;
       opacity: 0.4;
@@ -45,6 +51,21 @@ export const StyledCartProductCard = styled.li`
       :hover {
         opacity: 0.7;
       }
+    }
+
+    .quantityBox {
+      /* border: 2px solid ${({ theme }) => theme.colors.gray100}; */
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .quantityBox > button {
+      color: #EB5757;
+      padding: 6px 12px;
+      font-size: 1rem;
+      font-weight: 700;
+      background: ${({ theme }) => theme.colors.gray100};
     }
   }
 `;
