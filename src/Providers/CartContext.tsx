@@ -1,4 +1,6 @@
+import { AxiosError } from 'axios';
 import { createContext, ReactNode, useState } from 'react';
+import { iRequestError } from './UserContext';
 import api from '../services/api';
 
 interface iCartContextProps {
@@ -15,13 +17,13 @@ export interface iProduct {
 
 interface iCartContext {
   cart: iProduct[];
-  setCart: (array: iProduct[]) => void;
+  setCart: (props: iProduct[]) => void;
   cards: iProduct[];
-  addProduct: (product: iProduct) => void;
-  removeProduct: (productToRemove: iProduct) => void;
+  addProduct: (props: iProduct) => void;
+  removeProduct: (props: iProduct) => void;
   getProducts: () => void;
   modalOpen: boolean;
-  setModalOpen: (boolean: boolean) => void;
+  setModalOpen: (props: boolean) => void;
 }
 
 export const CartContext = createContext<iCartContext>({} as iCartContext);
@@ -34,14 +36,15 @@ export const CartProvider = ({ children }: iCartContextProps) => {
   const getProducts = async () => {
     try {
       const tokenLS = localStorage.getItem('@TOKEN');
-      const response = await api.get('/products', {
+      const response = await api.get<iProduct[]>('/products', {
         headers: {
           Authorization: `Bearer ${tokenLS}`,
         },
       });
-      setCards(await response.data);
+      setCards(response.data);
     } catch (error) {
-      // console.log(error);
+      const currentError = error as AxiosError<iRequestError>;
+      console.log(currentError.response?.data);
     }
   };
 

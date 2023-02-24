@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-no-useless-fragment */
 import { MdClose } from 'react-icons/md';
 import { useContext, useRef } from 'react';
 import CartProductList from './CartProductList';
@@ -8,7 +9,7 @@ import { CartContext } from '../../Providers/CartContext';
 const CartModal = () => {
   const { modalOpen, setModalOpen, cart } = useContext(CartContext);
 
-  const modal = useRef();
+  const modal = useRef<HTMLDialogElement>(null);
 
   const closeModal = () => {
     setModalOpen(false);

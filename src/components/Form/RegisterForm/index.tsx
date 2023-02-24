@@ -5,7 +5,7 @@ import formSchema from './validations';
 import Input from '../Input';
 import { StyledButton } from '../../../styles/button';
 import { StyledForm } from '../../../styles/form';
-import { UserContext } from '../../../Providers/UserContext';
+import { iUserRegister, UserContext } from '../../../Providers/UserContext';
 
 const RegisterForm = () => {
   const { userRegister } = useContext(UserContext);
@@ -14,27 +14,38 @@ const RegisterForm = () => {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm({
+  } = useForm<iUserRegister>({
     resolver: yupResolver(formSchema),
   });
-
-  const onSubmitFunction = (data) => {
+  const onSubmitFunction = (data: iUserRegister) => {
     userRegister(data);
   };
 
   return (
     <StyledForm onSubmit={handleSubmit(onSubmitFunction)}>
-      <Input type='text' {...register('name')} error={errors.name?.message} />
-      <Input type='text' {...register('email')} error={errors.email?.message} />
       <Input
-        type='password'
-        {...register('password')}
-        error={errors.password?.message}
+        label='Nome'
+        type='text'
+        {...register('name')}
+        errorInput={errors.name?.message}
       />
       <Input
+        label='Email'
+        type='text'
+        {...register('email')}
+        errorInput={errors.email?.message}
+      />
+      <Input
+        label='Senha'
+        type='password'
+        {...register('password')}
+        errorInput={errors.password?.message}
+      />
+      <Input
+        label='Confirmar senha'
         type='password'
         {...register('confirmPassword')}
-        error={errors.confirmPassword?.message}
+        errorInput={errors.confirmPassword?.message}
       />
       <StyledButton $buttonSize='default' $buttonStyle='gray'>
         Cadastrar
