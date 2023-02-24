@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import { AxiosError } from 'axios';
 import { createContext, ReactNode, useState } from 'react';
 import { iRequestError } from './UserContext';
@@ -55,7 +56,7 @@ export const CartProvider = ({ children }: iCartContextProps) => {
         },
       });
       setCards(response.data);
-      setCardsAPI(response.data)
+      setCardsAPI(response.data);
     } catch (error) {
       const currentError = error as AxiosError<iRequestError>;
       console.log(currentError.response?.data);
@@ -68,7 +69,7 @@ export const CartProvider = ({ children }: iCartContextProps) => {
     );
 
     if (productExistInCart === -1) {
-      const productToAdd = product as iProductCart
+      const productToAdd = product as iProductCart;
       productToAdd.quantity = 1;
       setCart([...cart, productToAdd]);
     } else {
@@ -106,13 +107,14 @@ export const CartProvider = ({ children }: iCartContextProps) => {
   };
 
   const filterProducts = (inputValue: string) => {
-    const filtered = cardsAPI.filter((product) => (inputValue
+    const filtered = cardsAPI.filter((product) =>
+      inputValue
         ? product.name.toLowerCase().includes(inputValue.toLowerCase()) ||
-            product.category.toLowerCase().includes(inputValue.toLowerCase())
-        : true)
+          product.category.toLowerCase().includes(inputValue.toLowerCase())
+        : true
     );
-    setCards(filtered)
-  }
+    setCards(filtered);
+  };
 
   return (
     <CartContext.Provider

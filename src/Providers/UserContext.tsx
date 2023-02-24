@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import { AxiosError } from 'axios';
 import { createContext, ReactNode, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';

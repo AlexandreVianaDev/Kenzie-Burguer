@@ -38,7 +38,7 @@ export const StyledCartProductCard = styled.li`
 
     > div {
       display: flex;
-      flex-direction:  column;
+      flex-direction: column;
       justify-content: space-between;
       gap: 16px;
     }
@@ -54,14 +54,15 @@ export const StyledCartProductCard = styled.li`
     }
 
     .quantityBox {
-      /* border: 2px solid ${({ theme }) => theme.colors.gray100}; */
       display: flex;
       justify-content: space-between;
       align-items: center;
+      gap: 12px;
+      max-width: fit-content;
     }
 
     .quantityBox > button {
-      color: #EB5757;
+      color: #eb5757;
       padding: 6px 12px;
       font-size: 1rem;
       font-weight: 700;
