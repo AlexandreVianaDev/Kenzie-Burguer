@@ -5,7 +5,7 @@ import formSchema from './validations';
 import Input from '../Input';
 import { StyledButton } from '../../../styles/button';
 import { StyledForm } from '../../../styles/form';
-import { UserContext } from '../../../Providers/UserContext';
+import { iUserRegister, UserContext } from '../../../Providers/UserContext';
 
 const RegisterForm = () => {
   const { userRegister } = useContext(UserContext);
@@ -14,11 +14,10 @@ const RegisterForm = () => {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm({
+  } = useForm<iUserRegister>({
     resolver: yupResolver(formSchema),
   });
-
-  const onSubmitFunction = (data) => {
+  const onSubmitFunction = (data : iUserRegister) => {
     userRegister(data);
   };
 

@@ -9,12 +9,29 @@ interface iUserContextProps {
 interface iUser {
   email: string;
   name: string;
-  id: number;
+  id?: number;
+}
+
+export interface iUserLogin {
+  email: string;
+  password: string;
+} 
+
+export interface iUserRegister {
+  name: string;
+  email: string;
+  password: string;
+  confirmPassword?: string;
+} 
+
+interface iUserResponse{
+    accessToken: string
+    user: iUser;
 }
 
 interface iUserContext {
-  userLogin: (data: any) => void;
-  userRegister: (data: any) => void;
+  userLogin: (props: iUserLogin) => void;
+  userRegister: (props: iUserRegister) => void;
   userLogout: () => void;
   user: iUser | undefined | null;
   token: string | undefined | null;
@@ -57,9 +74,9 @@ export const UserProvider = ({ children }: iUserContextProps) => {
     // }
   }, []);
 
-  const userLogin = async (data) => {
+  const userLogin = async (data: iUserLogin) => {
     try {
-      const response = await api.post('/login', data);
+      const response = await api.post<iUserResponse>('/login', data);
       setUser(response.data.user);
       localStorage.setItem('@TOKEN', response.data.accessToken);
       setToken(response.data.accessToken);
@@ -69,11 +86,10 @@ export const UserProvider = ({ children }: iUserContextProps) => {
     }
   };
 
-  const userRegister = async (data) => {
+  const userRegister = async (data: iUserRegister) => {
     try {
-      const response = await api.post('/users', data);
+      const response = await api.post<iUserResponse>('/users', data);
       navigate('/');
-      return response;
     } catch (error) {
       // console.log(error);
     }
