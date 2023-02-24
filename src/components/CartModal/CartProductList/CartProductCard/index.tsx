@@ -1,14 +1,34 @@
 import { MdDelete } from 'react-icons/md';
 import { useContext } from 'react';
 import { StyledCartProductCard } from './style';
-import { StyledTitle } from '../../../../styles/typography';
-import { CartContext, iProduct } from '../../../../Providers/CartContext';
+import { StyledParagraph, StyledTitle } from '../../../../styles/typography';
+import {
+  CartContext,
+  iProduct,
+  iProductCart,
+} from '../../../../Providers/CartContext';
 
-const CartProductCard = ({ name, category, img, price, id }: iProduct) => {
-  const { removeProduct } = useContext(CartContext);
+const CartProductCard = ({
+  name,
+  category,
+  img,
+  price,
+  id,
+  quantity,
+}: iProductCart) => {
+  const { removeProduct, increaseProduct, decreaseProduct } =
+    useContext(CartContext);
 
   const handleRemoveProduct = (product: iProduct) => {
     removeProduct(product);
+  };
+
+  const handleIncreaseProduct = (productId: number) => {
+    increaseProduct(productId);
+  };
+
+  const handleDecreaseProduct = (productId: number) => {
+    decreaseProduct(productId);
   };
 
   return (
@@ -17,9 +37,20 @@ const CartProductCard = ({ name, category, img, price, id }: iProduct) => {
         <img src={img} alt={name} />
       </div>
       <div className='contentBox'>
-        <StyledTitle tag='h3' $fontSize='three'>
-          {name}
-        </StyledTitle>
+        <div>
+          <StyledTitle tag='h3' $fontSize='three'>
+            {name}
+          </StyledTitle>
+          <div className='quantityBox'>
+            <button type='button' onClick={() => handleDecreaseProduct(id)}>
+              -
+            </button>
+            <StyledParagraph>{quantity}</StyledParagraph>
+            <button type='button' onClick={() => handleIncreaseProduct(id)}>
+              +
+            </button>
+          </div>
+        </div>
         <button
           type='button'
           aria-label='Remover'
