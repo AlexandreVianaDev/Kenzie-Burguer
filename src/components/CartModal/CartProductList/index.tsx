@@ -25,6 +25,7 @@ const CartProductList = () => {
                 img={card.img}
                 price={card.price}
                 id={card.id}
+                quantity={card.quantity}
               />
             ))}
           </ul>
@@ -37,7 +38,7 @@ const CartProductList = () => {
               {cart
                 .reduce(
                   (accumulator, currentValue) =>
-                    accumulator + currentValue.price,
+                    accumulator + currentValue.price * currentValue.quantity,
                   0
                 )
                 .toLocaleString('pt-BR', {
