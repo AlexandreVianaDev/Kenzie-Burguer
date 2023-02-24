@@ -8,7 +8,6 @@ const ProductCard = ({ name, category, img, price, id }: iProduct) => {
   const { addProduct } = useContext(CartContext);
 
   const handleProductClick = (product: iProduct) => {
-    // console.log(product);
     addProduct(product);
   };
 
