@@ -1,3 +1,4 @@
+import { AxiosError } from 'axios';
 import { createContext, ReactNode, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import api from '../services/api';
@@ -15,18 +16,27 @@ interface iUser {
 export interface iUserLogin {
   email: string;
   password: string;
-} 
+}
 
 export interface iUserRegister {
   name: string;
   email: string;
   password: string;
   confirmPassword?: string;
-} 
+}
 
-interface iUserResponse{
-    accessToken: string
-    user: iUser;
+interface iUserResponse {
+  accessToken: string;
+  user: iUser;
+}
+
+export interface iRequestError {
+  error: string;
+  response: iRequestErrorResponse | undefined;
+}
+
+export interface iRequestErrorResponse {
+  data: string | undefined;
 }
 
 interface iUserContext {
@@ -52,26 +62,6 @@ export const UserProvider = ({ children }: iUserContextProps) => {
     if (tokenLS) {
       navigate('/shop');
     }
-    // const userAutoLogin = async () => {
-    //   try {
-    //     const response = await api.get(`/login`, {
-    //       headers: {
-    //         Authorization: `Bearer ${token}`,
-    //       },
-    //     });
-    //     setUser(await response.data.user);
-
-    // window.location.pathname !== "/shop"
-    // ? navigate("/shop")
-    // : null;
-    // }
-    // catch (error) {
-    //   console.log(error)
-    //   localStorage.clear();
-    // }
-    // };
-    // userAutoLogin();
-    // }
   }, []);
 
   const userLogin = async (data: iUserLogin) => {
@@ -82,16 +72,18 @@ export const UserProvider = ({ children }: iUserContextProps) => {
       setToken(response.data.accessToken);
       navigate('/shop');
     } catch (error) {
-      // console.log(error);
+      const currentError = error as AxiosError<iRequestError>;
+      console.log(currentError.response?.data);
     }
   };
 
   const userRegister = async (data: iUserRegister) => {
     try {
-      const response = await api.post<iUserResponse>('/users', data);
+      await api.post<iUserResponse>('/users', data);
       navigate('/');
     } catch (error) {
-      // console.log(error);
+      const currentError = error as AxiosError<iRequestError>;
+      console.log(currentError.response?.data);
     }
   };
 

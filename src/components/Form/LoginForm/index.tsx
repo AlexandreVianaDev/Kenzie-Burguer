@@ -18,17 +18,23 @@ const LoginForm = () => {
     resolver: yupResolver(formSchema),
   });
 
-  const onSubmitFunction = (data : iUserLogin) => {
+  const onSubmitFunction = (data: iUserLogin) => {
     userLogin(data);
   };
 
   return (
     <StyledForm onSubmit={handleSubmit(onSubmitFunction)}>
-      <Input type='text' {...register('email')} error={errors.email?.message} />
       <Input
+        label='Email'
+        type='text'
+        {...register('email')}
+        errorInput={errors.email?.message}
+      />
+      <Input
+        label='Senha'
         type='password'
         {...register('password')}
-        error={errors.password?.message}
+        errorInput={errors.password?.message}
       />
       <StyledButton $buttonSize='default' $buttonStyle='green'>
         Entrar

@@ -17,23 +17,35 @@ const RegisterForm = () => {
   } = useForm<iUserRegister>({
     resolver: yupResolver(formSchema),
   });
-  const onSubmitFunction = (data : iUserRegister) => {
+  const onSubmitFunction = (data: iUserRegister) => {
     userRegister(data);
   };
 
   return (
     <StyledForm onSubmit={handleSubmit(onSubmitFunction)}>
-      <Input type='text' {...register('name')} error={errors.name?.message} />
-      <Input type='text' {...register('email')} error={errors.email?.message} />
       <Input
-        type='password'
-        {...register('password')}
-        error={errors.password?.message}
+        label='Nome'
+        type='text'
+        {...register('name')}
+        errorInput={errors.name?.message}
       />
       <Input
+        label='Email'
+        type='text'
+        {...register('email')}
+        errorInput={errors.email?.message}
+      />
+      <Input
+        label='Senha'
+        type='password'
+        {...register('password')}
+        errorInput={errors.password?.message}
+      />
+      <Input
+        label='Confirmar senha'
         type='password'
         {...register('confirmPassword')}
-        error={errors.confirmPassword?.message}
+        errorInput={errors.confirmPassword?.message}
       />
       <StyledButton $buttonSize='default' $buttonStyle='gray'>
         Cadastrar

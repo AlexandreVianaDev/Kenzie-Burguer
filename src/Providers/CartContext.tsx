@@ -1,4 +1,6 @@
+import { AxiosError } from 'axios';
 import { createContext, ReactNode, useState } from 'react';
+import { iRequestError } from './UserContext';
 import api from '../services/api';
 
 interface iCartContextProps {
@@ -41,7 +43,8 @@ export const CartProvider = ({ children }: iCartContextProps) => {
       });
       setCards(response.data);
     } catch (error) {
-      // console.log(error);
+      const currentError = error as AxiosError<iRequestError>;
+      console.log(currentError.response?.data);
     }
   };
 

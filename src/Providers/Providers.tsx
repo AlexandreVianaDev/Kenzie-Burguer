@@ -6,7 +6,7 @@ interface iChildren {
   children: ReactNode;
 }
 
-const Providers = ({ children } : iChildren) => (
+const Providers = ({ children }: iChildren) => (
   <UserProvider>
     <CartProvider>{children}</CartProvider>
   </UserProvider>
