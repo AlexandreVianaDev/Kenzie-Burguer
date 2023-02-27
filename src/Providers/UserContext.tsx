@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable no-console */
 import { AxiosError } from 'axios';
 import { createContext, ReactNode, useEffect, useState } from 'react';
@@ -59,15 +60,30 @@ export const UserProvider = ({ children }: iUserContextProps) => {
   // AUTOLOGIN
   useEffect(() => {
     const tokenLS = localStorage.getItem('@TOKEN');
+    const userId = localStorage.getItem('@USERID');
     setToken(tokenLS);
-    if (tokenLS) {
-      navigate('/shop');
+    if (userId) {
+      try {
+        const autoLogin = async () => {
+          const response = await api.get<iUser>(`/users/${userId}`, {
+            headers: {
+              Authorization: `Bearer ${tokenLS}`,
+            },
+          });
+          setUser(response.data);
+        };
+        navigate('/shop');
+      } catch (error) {
+        const currentError = error as AxiosError<iRequestError>;
+        console.log(currentError.response?.data);
+      }
     }
   }, []);
 
   const userLogin = async (data: iUserLogin) => {
     try {
       const response = await api.post<iUserResponse>('/login', data);
+      localStorage.setItem('@USERID', JSON.stringify(response.data.user.id));
       setUser(response.data.user);
       localStorage.setItem('@TOKEN', response.data.accessToken);
       setToken(response.data.accessToken);
