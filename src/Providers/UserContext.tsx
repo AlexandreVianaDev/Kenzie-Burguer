@@ -42,8 +42,8 @@ export interface iRequestErrorResponse {
 }
 
 interface iUserContext {
-  userLogin: (props: iUserLogin) => void;
-  userRegister: (props: iUserRegister) => void;
+  userLogin: (props: iUserLogin) => Promise<void>;
+  userRegister: (props: iUserRegister) => Promise<void>;
   userLogout: () => void;
   user: iUser | undefined | null;
   token: string | undefined | null;
