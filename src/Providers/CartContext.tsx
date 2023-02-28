@@ -34,7 +34,7 @@ interface iCartContext {
   increaseProduct: (props: number) => void;
   decreaseProduct: (props: number) => void;
   filterProducts: (props: string) => void;
-  getProducts: () => void;
+  getProducts: () => Promise<void>;
   modalOpen: boolean;
   setModalOpen: (props: boolean) => void;
 }
