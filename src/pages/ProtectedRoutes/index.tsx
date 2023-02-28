@@ -8,7 +8,7 @@ const ProtectedRoutes = () => {
 
   const { token } = useContext(UserContext);
 
-  return <>{token || tokenLS ? <Outlet /> : <Navigate to='/' />}</>;
+  return token || tokenLS ? <Outlet /> : <Navigate to='/' />
 };
 
 export default ProtectedRoutes;
